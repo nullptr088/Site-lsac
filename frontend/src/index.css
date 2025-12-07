@@ -1,0 +1,304 @@
+/* ----------------------------------------------------------- */
+/* 1. STILURI GLOBALE ȘI FONTURI (Conform Figma) */
+/* ----------------------------------------------------------- */
+
+/* Presupunem că fontul Enriqueta este încărcat în index.html */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif; /* Fallback */
+    background-color: #f9f9f9;
+}
+
+/* ----------------------------------------------------------- */
+/* 2. HEADER ȘI NAVIGARE */
+/* ----------------------------------------------------------- */
+
+.main-header {
+    position: sticky;
+    top: 0;
+    background-color: rgb(128,45,21);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 10;
+
+}
+
+.header-content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.logo-img {
+    width: 25px;
+    height: 25px;
+}
+
+.logo-text {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #fff;
+}
+
+/* Navigare Desktop */
+.nav-desktop {
+    display: none; /* Ascunde pe mobil */
+    gap: 15px;
+    align-items: center;
+}
+
+/* Media Query: Afișează Navigare Desktop pe ecrane mari */
+@media (min-width: 768px) {
+    .nav-desktop {
+        display: flex;
+    }
+    .menu-toggle-btn {
+        display: none !important;
+    }
+}
+
+.nav-btn {
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: none;
+    background-color: transparent;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.nav-btn.current {
+    color: #fff;
+}
+
+/* Navigare Mobil */
+.menu-toggle-btn {
+    display: block;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 1.5em;
+}
+
+.nav-mobile {
+    display: block;
+    border-top: 1px solid #eee;
+    padding: 10px 20px;
+    background-color: #fafafa;
+}
+
+@media (min-width: 768px) {
+    .nav-mobile {
+        display: none;
+    }
+}
+
+.mobile-nav-btn {
+    width: 100%;
+    text-align: left;
+    padding: 10px;
+    border-radius: 4px;
+    border: none;
+    background-color: transparent;
+    color: #333;
+    font-weight: 600;
+    cursor: pointer;
+    display: block;
+    transition: background-color 0.2s;
+}
+
+.mobile-nav-btn.current {
+    background-color: #ffe0b2;
+}
+
+
+/* ----------------------------------------------------------- */
+/* 3. HOMEPAGE STATIC (RESPONSIVE) */
+/* ----------------------------------------------------------- */
+
+.homepage-container {
+    margin: 0 auto;
+}
+
+.homepage-hero {
+    position: relative;
+    height: 350px; /* Înălțime mai mică pe mobil */
+    background-color: white;
+    border-bottom: 4px solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+@media (min-width: 768px) {
+    .homepage-hero {
+        height: 500px;
+    }
+}
+
+.hero-background {
+    position: absolute;
+    inset: 0;
+    opacity: 0.15;
+    z-index: 0;
+}
+
+.hero-bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.main-title-text {
+    font-family: 'Enriqueta', serif;
+    font-weight: 400;
+    font-size: 3em; /* Responsive: Dimensiune mai mică pe mobil */
+    line-height: 1.2;
+    color: #202020;
+    text-align: center;
+    padding: 10px;
+}
+
+@media (min-width: 768px) {
+    .main-title-text {
+        font-size: 6em; /* 128px este prea mare */
+        line-height: 1.1;
+    }
+}
+
+.main-title-highlight {
+    color: darkred;
+    border-bottom: 4px solid darkred;
+}
+
+/* Call to Action */
+.call-to-action-band {
+    background-color: rgb(128,45,21);
+    color: white;
+    padding: 30px 20px;
+    text-align: center;
+    box-shadow: 0 8px 10px rgba(0,0,0,0.2);
+}
+
+.cta-text {
+    font-size: 1.2em;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+@media (min-width: 768px) {
+    .call-to-action-band {
+        padding: 50px;
+    }
+    .cta-text {
+        font-size: 1.5em;
+    }
+}
+
+.cta-button {
+    margin-top: 20px;
+    background-color: #FFD700;
+    color: #333;
+    padding: 10px 30px;
+    border-radius: 30px;
+    border: none;
+    font-weight: bold;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.cta-button:hover {
+    background-color: #f7d200;
+}
+
+/* Secțiunea Louis */
+.homepage-bottom-section {
+    background-color: white;
+    padding: 30px 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+.louis-section {
+    max-width: 150px; /* Limită pe mobil */
+    text-align: center;
+    position: relative;
+}
+
+@media (min-width: 768px) {
+    .louis-section {
+        max-width: 100em;
+    }
+}
+
+.louis-img {
+    width: 100%;
+    height: auto;
+}
+
+.grill-bottom-img {
+    width: 100px;
+    height: 100px;
+    opacity: 0.8;
+}
+
+/* Ascunde al doilea grătar pe mobil */
+.hidden-mobile {
+    display: none;
+}
+@media (min-width: 768px) {
+    .hidden-mobile {
+        display: block;
+    }
+}
+
+
+/* ----------------------------------------------------------- */
+/* 4. FOOTER (Maro Închis) */
+/* ----------------------------------------------------------- */
+
+.main-footer {
+    background-color: rgb(128,45,21); /* Culoarea maro închis */
+    color: white;
+    padding: 20px;
+    margin-top: 30px;
+    text-align: center;
+}
+
+.footer-contact {
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+
+.footer-social-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.social-link {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 1.2em;
+    transition: color 0.2s;
+}
+
+.social-link:hover {
+    color: white;
+}

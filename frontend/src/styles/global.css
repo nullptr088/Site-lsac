@@ -1,0 +1,39 @@
+:root {
+  --brown-dark: #6b1c0f;
+  --brown-main: #8c1d12;
+  --brown-light: #a52a21;
+}
+
+.hero {
+  text-align: center;
+  padding: 80px 20px;
+  background: white;
+}
+
+.hero h1 {
+  font-size: 3.5rem;
+}
+
+.hero span {
+  color: var(--brown-main);
+}
+
+.hero p {
+  max-width: 600px;
+  margin: 20px auto;
+  font-size: 1.1rem;
+}
+
+.hero button {
+  background: var(--brown-main);
+  color: white;
+  padding: 14px 32px;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.hero button:hover {
+  background: var(--brown-dark);
+}
