@@ -57,6 +57,14 @@ body {
     align-items: center;
 }
 
+/* Stilul pentru salutul utilizatorului */
+.user-greeting {
+    color: #FFD700; /* Auriu pentru a scoate in evidenta */
+    font-weight: 700;
+    font-size: 1em;
+}
+
+
 /* Media Query: Afișează Navigare Desktop pe ecrane mari */
 @media (min-width: 768px) {
     .nav-desktop {
@@ -75,11 +83,17 @@ body {
     color: #fff;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.nav-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .nav-btn.current {
-    color: #fff;
+    color: #FFD700; /* Culoarea curenta, diferita */
+    text-decoration: underline;
+    text-underline-offset: 4px;
 }
 
 /* Navigare Mobil */
@@ -89,13 +103,14 @@ body {
     background: none;
     cursor: pointer;
     font-size: 1.5em;
+    color: #fff;
 }
 
 .nav-mobile {
     display: block;
-    border-top: 1px solid #eee;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding: 10px 20px;
-    background-color: #fafafa;
+    background-color: rgb(128,45,21); /* Fundal ca header-ul */
 }
 
 @media (min-width: 768px) {
@@ -111,15 +126,30 @@ body {
     border-radius: 4px;
     border: none;
     background-color: transparent;
-    color: #333;
+    color: #fff;
     font-weight: 600;
     cursor: pointer;
     display: block;
     transition: background-color 0.2s;
 }
 
+.mobile-nav-btn:hover {
+     background-color: rgba(255, 255, 255, 0.1);
+}
+
 .mobile-nav-btn.current {
-    background-color: #ffe0b2;
+    background-color: #a05a3e; /* O nuanta mai deschisa de maro */
+}
+
+.user-greeting-mobile {
+    display: block;
+    padding: 10px;
+    color: #FFD700; 
+    font-weight: 700;
+    font-size: 0.9em;
+    text-align: center;
+    border-top: 1px dashed rgba(255, 255, 255, 0.2);
+    margin-top: 5px;
 }
 
 
@@ -133,7 +163,7 @@ body {
 
 .homepage-hero {
     position: relative;
-    height: 350px; /* Înălțime mai mică pe mobil */
+    height: 350px; 
     background-color: white;
     border-bottom: 4px solid #eee;
     display: flex;
@@ -164,16 +194,18 @@ body {
 .main-title-text {
     font-family: 'Enriqueta', serif;
     font-weight: 400;
-    font-size: 3em; /* Responsive: Dimensiune mai mică pe mobil */
+    font-size: 3em; 
     line-height: 1.2;
     color: #202020;
     text-align: center;
     padding: 10px;
+    position: relative;
+    z-index: 1;
 }
 
 @media (min-width: 768px) {
     .main-title-text {
-        font-size: 6em; /* 128px este prea mare */
+        font-size: 6em; 
         line-height: 1.1;
     }
 }
@@ -236,14 +268,14 @@ body {
 }
 
 .louis-section {
-    max-width: 150px; /* Limită pe mobil */
+    max-width: 150px; 
     text-align: center;
     position: relative;
 }
 
 @media (min-width: 768px) {
     .louis-section {
-        max-width: 100em;
+        max-width: 300px; /* Am ajustat o valoare mai rezonabila */
     }
 }
 
@@ -252,29 +284,13 @@ body {
     height: auto;
 }
 
-.grill-bottom-img {
-    width: 100px;
-    height: 100px;
-    opacity: 0.8;
-}
-
-/* Ascunde al doilea grătar pe mobil */
-.hidden-mobile {
-    display: none;
-}
-@media (min-width: 768px) {
-    .hidden-mobile {
-        display: block;
-    }
-}
-
 
 /* ----------------------------------------------------------- */
 /* 4. FOOTER (Maro Închis) */
 /* ----------------------------------------------------------- */
 
 .main-footer {
-    background-color: rgb(128,45,21); /* Culoarea maro închis */
+    background-color: rgb(128,45,21); 
     color: white;
     padding: 20px;
     margin-top: 30px;
@@ -301,4 +317,517 @@ body {
 
 .social-link:hover {
     color: white;
+}
+
+/* ----------------------------------------------------------- */
+/* 5. AUTENTIFICARE (LOGIN/REGISTER) - STIL MINIMALIST */
+/* ----------------------------------------------------------- */
+
+.auth-page-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 20px;
+    min-height: calc(100vh - 180px); /* Ajusteaza inaltimea pentru a nu se suprapune cu header/footer */
+    background-color: #f9f9f9;
+}
+
+.auth-card-minimalist {
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    border-top: 5px solid darkred; /* Linia de accent */
+}
+
+.auth-card-title {
+    font-family: 'Enriqueta', serif;
+    font-size: 1.8em;
+    color: darkred;
+    margin-bottom: 25px;
+    font-weight: 700;
+}
+
+.auth-error-message {
+    background-color: #fee;
+    color: #c00;
+    border: 1px solid #c00;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+.auth-form-minimalist {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.auth-input-minimalist {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.auth-input-minimalist:focus {
+    border-color: darkred;
+    box-shadow: 0 0 5px rgba(139, 0, 0, 0.3);
+    outline: none;
+}
+
+.auth-submit-btn-minimalist {
+    padding: 12px;
+    background-color: darkred;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.auth-submit-btn-minimalist:hover:not(:disabled) {
+    background-color: #a00000;
+}
+
+.auth-submit-btn-minimalist:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.auth-switch-text {
+    margin-top: 20px;
+    font-size: 0.9em;
+    color: #555;
+}
+
+.auth-switch-link {
+    color: darkred;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: underline;
+    transition: color 0.2s;
+}
+
+.auth-switch-link:hover {
+    color: #a00000;
+}
+
+/* ----------------------------------------------------------- */
+/* 6. PROFILE PAGE (A fost doar un container, acum il stilizam) */
+/* ----------------------------------------------------------- */
+
+.profile-container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+.profile-title {
+    font-family: 'Enriqueta', serif;
+    color: #333;
+    font-size: 2em;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.profile-layout-grid {
+    display: grid;
+    gap: 30px;
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+    .profile-layout-grid {
+        grid-template-columns: 300px 1fr; 
+    }
+}
+
+.profile-details-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border-left: 5px solid darkred;
+}
+
+.profile-name {
+    font-size: 1.5em;
+    color: darkred;
+    margin-bottom: 15px;
+}
+
+.profile-info {
+    margin-bottom: 10px;
+    font-size: 0.95em;
+    color: #555;
+}
+
+.post-grill-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: rgb(128,45,21);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.post-grill-btn:hover {
+    background-color: #8c3b1e;
+}
+
+.user-grills-title {
+    font-family: 'Enriqueta', serif;
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.user-grills-grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.no-grills-text {
+    color: #777;
+    padding: 20px;
+    border: 1px dashed #ccc;
+    text-align: center;
+    border-radius: 4px;
+}
+
+/* ----------------------------------------------------------- */
+/* 7. GRILL CARD & LEADERBOARD */
+/* ----------------------------------------------------------- */
+
+.leaderboard-container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+.leaderboard-title {
+    font-family: 'Enriqueta', serif;
+    color: darkred;
+    font-size: 2.5em;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.leaderboard-top-section {
+    background-color: #ffe0b2; /* O culoare deschisă de accent */
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.leaderboard-subtitle {
+    font-family: 'Enriqueta', serif;
+    font-size: 1.5em;
+    color: rgb(128,45,21);
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.top-grills-grid {
+    display: flex;
+    justify-content: space-around;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.top-grill-card {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 250px;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+    border-top: 3px solid #FFD700;
+}
+
+.rank-badge {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    background-color: darkred;
+    color: #FFD700;
+    padding: 5px 10px;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 0.9em;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.top-grill-name {
+    font-family: 'Enriqueta', serif;
+    font-size: 1.2em;
+    color: #333;
+    margin: 10px 0 5px;
+}
+
+.top-grill-mics {
+    font-weight: bold;
+    color: rgb(128,45,21);
+    margin-bottom: 10px;
+}
+
+.like-toggle-btn {
+    padding: 8px 15px;
+    background-color: darkred;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.like-toggle-btn:hover {
+    background-color: #a00000;
+}
+
+/* Grills for Pimps section */
+
+.grills-for-pimps-title {
+    font-family: 'Enriqueta', serif;
+    font-size: 1.8em;
+    color: #333;
+    margin: 40px 0 20px;
+    text-align: center;
+}
+
+.search-bar-container {
+    display: flex;
+    max-width: 500px;
+    margin: 0 auto 30px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    overflow: hidden;
+    background-color: white;
+}
+
+.search-icon {
+    padding: 10px;
+    color: #888;
+}
+
+.search-input {
+    flex-grow: 1;
+    padding: 10px;
+    border: none;
+    font-size: 1em;
+}
+
+.search-input:focus {
+    outline: none;
+}
+
+.all-grills-grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.grill-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.grill-image-placeholder {
+    height: 150px;
+    background-color: #eee;
+    border: 1px dashed #ccc;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #777;
+    border-radius: 4px;
+}
+
+.grill-title {
+    font-family: 'Enriqueta', serif;
+    font-size: 1.4em;
+    color: darkred;
+    margin: 0 0 5px;
+}
+
+.grill-meta {
+    font-size: 0.8em;
+    color: #aaa;
+    margin-bottom: 10px;
+}
+
+.grill-description {
+    font-size: 0.9em;
+    color: #555;
+    flex-grow: 1;
+    margin-bottom: 15px;
+}
+
+.grill-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.like-btn {
+    padding: 8px 15px;
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.like-btn.liked {
+    background-color: darkred;
+    color: white;
+    border-color: darkred;
+}
+
+.like-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.like-btn.liked:hover {
+    background-color: #a00000;
+}
+
+.admin-actions button {
+    margin-left: 10px;
+    padding: 6px 10px;
+    border-radius: 4px;
+    border: none;
+    font-size: 0.9em;
+    cursor: pointer;
+}
+
+.edit-btn {
+    background-color: #FFD700;
+    color: #333;
+}
+
+.delete-btn {
+    background-color: #ff4d4f;
+    color: white;
+}
+
+/* ----------------------------------------------------------- */
+/* 8. MODAL & POST GRILLE */
+/* ----------------------------------------------------------- */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.modal-content {
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.modal-title {
+    font-family: 'Enriqueta', serif;
+    font-size: 1.5em;
+    color: darkred;
+    margin: 0;
+}
+
+.modal-close-btn {
+    background: none;
+    border: none;
+    font-size: 1.2em;
+    cursor: pointer;
+    color: #777;
+}
+
+.modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.modal-input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+.modal-textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.modal-submit-btn {
+    padding: 12px;
+    background-color: rgb(128,45,21);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.modal-submit-btn:hover {
+    background-color: #8c3b1e;
+}
+
+/* ----------------------------------------------------------- */
+/* 9. UTILITIES */
+/* ----------------------------------------------------------- */
+
+.loading-text {
+    text-align: center;
+    padding: 50px;
+    font-size: 1.2em;
+    color: #888;
 }
