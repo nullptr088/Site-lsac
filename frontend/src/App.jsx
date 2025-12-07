@@ -1,13 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
-// ----------------------------------------------------------------------
-// ❗ PASUL 1: IMPORTĂM SVG-URILE (Asigură-te că fișierele sunt în ./assets)
-// ----------------------------------------------------------------------
 import LogoGrill from './assets/logo.svg'; 
 import GratarSvg from './assets/Gratare.svg'; 
 import LouisSvg from './assets/Louis.svg'; 
 
-// URL-ul API, asigurat ca fiind corect
 const API_BASE_URL = 'http://localhost:3001/api';
 
 const fetchApi = async (url, options = {}) => {
@@ -31,10 +27,6 @@ const fetchApi = async (url, options = {}) => {
 
   return data;
 };
-
-// ----------------------------------------------------------------------
-// MODAL ȘI GRILL CARD (Folosesc className pentru stilizare din index.css)
-// ----------------------------------------------------------------------
 
 const SimpleModal = ({ title, children, onClose }) => (
   <div className="modal-overlay">
@@ -77,11 +69,9 @@ const GrillCard = ({ grill, user, onLike, onDelete, onEdit }) => {
         
         {(isOwner || isAdmin) && (
             <div className="admin-actions">
-              {/* Acțiunea de editare este doar pentru Owner, dacă nu e admin (Adminul editează tot din DB) */}
                 {(isOwner && !isAdmin) && ( 
                     <button onClick={() => onEdit(grill)} className="edit-btn" title="Editează">Edit</button>
                 )}
-                {/* Ștergere e pentru Owner și Admin */}
                 <button onClick={() => onDelete(grill._id)} className="delete-btn" title="Șterge">Șterge</button>
             </div>
         )}
@@ -90,32 +80,24 @@ const GrillCard = ({ grill, user, onLike, onDelete, onEdit }) => {
   );
 };
 
-// ----------------------------------------------------------------------
-// HOMEPAGE STATIC (Integrare SVG)
-// ----------------------------------------------------------------------
-
 const StaticHomePage = ({ setCurrentPage }) => {
     
     return (
       <div className="homepage-container">
           
-          {/* Secțiunea 1: Ilustrații și Titlu */}
           <div className="homepage-hero">
               
-              {/* SVG-ul Gratare.svg ca fundal */}
               <div className="hero-background">
                   <img src={GratarSvg} alt="Grill Background" className="hero-bg-img" />
               </div>
               
               <div className="hero-content">
-                  {/* Titlul Pimp Your Grill (Folosește clasa main-title-text pentru font Enriqueta) */}
                   <h1 className="main-title-text">
                       Pimp Your <span className="main-title-highlight">Grill</span>
                   </h1>
               </div>
           </div>
 
-          {/* Secțiunea 2: Call to Action (Maro Închis) */}
           <div className="call-to-action-band">
               <p className="cta-text">
                   Înregistrează-te pentru a intra și tu în cea mai mare <br />rețea de grătaragii din lume!
@@ -128,10 +110,8 @@ const StaticHomePage = ({ setCurrentPage }) => {
               </button>
           </div>
           
-          {/* Secțiunea 3: Louis și Grătarele */}
           <div className="homepage-bottom-section">
               
-              {/* Louis (Peter Griffin) */}
               <div className="louis-section">
                   <img src={LouisSvg} alt="Louis Family Guy" className="louis-img" />
               </div>
@@ -144,7 +124,7 @@ const StaticHomePage = ({ setCurrentPage }) => {
 const AuthPage = ({ type, onAuthSuccess, setCurrentPage }) => {
   const [formData, setFormData] = useState({ full_name: '', phone: '', email: '', password: '', confirmPassword: '' });
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false); // Adăugat stare de loading
+  const [loading, setLoading] = useState(false); 
   const isRegister = type === 'register';
 
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -152,7 +132,7 @@ const AuthPage = ({ type, onAuthSuccess, setCurrentPage }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(''); 
-    setLoading(true); // Activează loading
+    setLoading(true); 
 
     const endpoint = isRegister ? '/auth/register' : '/auth/login';
     const payload = isRegister 
@@ -172,18 +152,15 @@ const AuthPage = ({ type, onAuthSuccess, setCurrentPage }) => {
     try {
       const data = await fetchApi(endpoint, { method: 'POST', body: JSON.stringify(payload) });
       
-      // 1. Salvează token-ul și user ID-ul
       localStorage.setItem('token', data.token);
-      localStorage.setItem('userId', data._id || data.user?._id); // Asigură-te că iei ID-ul
+      localStorage.setItem('userId', data._id || data.user?._id); 
 
-      // 2. Apelăm funcția de succes din App, care va prelua profilul și va redirecționa
-      await onAuthSuccess(data); // Apelează onAuthSuccess care este asincronă
+      await onAuthSuccess(data); 
 
     } catch (err) {
-      // Afișează eroarea de la API (ex: Parolă incorectă, Email inexistent)
       setError(`Eroare de autentificare: ${err.message}`);
     } finally {
-        setLoading(false); // Dezactivează loading, indiferent de rezultat
+        setLoading(false); 
     }
   };
 
@@ -275,8 +252,6 @@ const ProfilePage = ({ user, refreshGrills, handleLogout }) => {
         try {
             setLoading(true);
             const data = await fetchApi('/user/profile');
-            // Notă: API-ul ar trebui să returneze { user: {...}, grills: [...] }
-            // Ajustez pentru a folosi 'grills' din răspunsul profilului
             setUserGrills(data.grills || []); 
         } catch (err) {
             console.error('Eroare la preluarea profilului:', err);
@@ -321,7 +296,6 @@ const ProfilePage = ({ user, refreshGrills, handleLogout }) => {
             <h2 className="profile-title">Profilul Meu 🌟</h2>
 
             <div className="profile-layout-grid">
-                {/* Card Detalii */}
                 <div className="profile-details-card">
                     <h3 className="profile-name">{user.full_name || 'Grill Pimp'}</h3>
                     <p className="profile-info">📧 Email: {user.email}</p>
@@ -336,7 +310,6 @@ const ProfilePage = ({ user, refreshGrills, handleLogout }) => {
                     </button>
                 </div>
 
-                {/* Postări Proprii */}
                 <div>
                     <h3 className="user-grills-title">Grill-urile Mele ({userGrills.length})</h3>
                     {userGrills.length === 0 ? (
@@ -346,11 +319,11 @@ const ProfilePage = ({ user, refreshGrills, handleLogout }) => {
                             {userGrills.map(grill => (
                                 <GrillCard 
                                     key={grill._id} 
-                                    grill={{...grill, isLiked: false}} // Punem isLiked: false aici, deoarece like-urile nu se gestionează în profil
+                                    grill={{...grill, isLiked: false}} 
                                     user={user} 
                                     onDelete={handleDelete}
                                     onEdit={handleEdit}
-                                    onLike={handleDummyLike} // Funcție goală/alert
+                                    onLike={handleDummyLike} 
                                 />
                             ))}
                         </div>
@@ -369,7 +342,6 @@ const ProfilePage = ({ user, refreshGrills, handleLogout }) => {
     );
 };
 
-// ... (Componenta LeaderboardPage, lăsată neschimbată)
 const LeaderboardPage = ({ user }) => {
     const [allGrills, setAllGrills] = useState([]);
     const [bestGrills, setBestGrills] = useState([]);
@@ -461,7 +433,6 @@ const LeaderboardPage = ({ user }) => {
         <div className="leaderboard-container">
             <h2 className="leaderboard-title">THE BEST GRILLS 🔥</h2>
 
-            {/* Leaderboard */}
             <div className="leaderboard-top-section">
                 <h3 className="leaderboard-subtitle">Top 3 Grills</h3>
                 <div className="top-grills-grid">
@@ -485,7 +456,6 @@ const LeaderboardPage = ({ user }) => {
                 </div>
             </div>
 
-            {/* All Grills (Grills for Pimps) */}
             <h3 className="grills-for-pimps-title">Grills for Pimps 🥩</h3>
             
             <div className="search-bar-container">
@@ -515,10 +485,6 @@ const LeaderboardPage = ({ user }) => {
     );
 };
 
-// ----------------------------------------------------------------------
-// MAIN APP COMPONENT
-// ----------------------------------------------------------------------
-
 const App = () => {
   const [user, setUser] = useState(null);
   const [currentPage, setCurrentPage] = useState('leaderboard'); 
@@ -528,7 +494,7 @@ const App = () => {
     const token = localStorage.getItem('token');
     if (token) {
       fetchApi('/user/profile')
-        .then(data => setUser(data.user)) // API ar trebui să returneze {user: {...}}
+        .then(data => setUser(data.user)) 
         .catch(() => handleLogout()); 
     }
   }, []);
@@ -541,11 +507,9 @@ const App = () => {
   };
   
   const handleAuthSuccess = async () => {
-    // ❗ Logica de succes va naviga la 'profile' (sau 'leaderboard' dacă preferi)
     try {
       const profileData = await fetchApi('/user/profile');
       setUser(profileData.user);
-      // Redirecționare corectă după Login/Register
       setCurrentPage('profile'); 
     } catch (err) {
       alert('Eroare la încărcarea profilului după autentificare');
@@ -557,24 +521,19 @@ const App = () => {
   const refreshLeaderboard = () => setCurrentPage('leaderboard');
   
   const renderPage = () => {
-    // Afișează pagina statică doar dacă nu e logat și e pe homepage
     if (!user && currentPage === 'leaderboard') {
         return <StaticHomePage setCurrentPage={setCurrentPage} />;
     }
 
     switch (currentPage) {
       case 'login':
-        // Transmitem setCurrentPage pentru a permite comutarea la Register
         return <AuthPage type="login" onAuthSuccess={handleAuthSuccess} setCurrentPage={setCurrentPage} />;
       case 'register':
-        // Transmitem setCurrentPage pentru a permite comutarea la Login
         return <AuthPage type="register" onAuthSuccess={handleAuthSuccess} setCurrentPage={setCurrentPage} />;
       case 'profile':
-        // Dacă e pe profile dar nu e logat, îl trimitem la login
         return user ? <ProfilePage user={user} refreshGrills={refreshLeaderboard} handleLogout={handleLogout} /> : <AuthPage type="login" onAuthSuccess={handleAuthSuccess} setCurrentPage={setCurrentPage} />;
       case 'leaderboard':
       default:
-        // Dacă e logat și merge pe leaderboard, afișează LeaderboardPage
         return <LeaderboardPage user={user} />;
     }
   };
@@ -584,11 +543,9 @@ const App = () => {
     ...(user
       ? [
           { name: 'Profile', page: 'profile', isCurrent: currentPage === 'profile' }, 
-          // ❗ Aici e 'Logout'
           { name: 'Logout', action: handleLogout, isCurrent: false } 
         ]
       : [
-          // ❗ Aici sunt 'Login' și 'Register'
           { name: 'Login', page: 'login', isCurrent: currentPage === 'login' }, 
           { name: 'Register', page: 'register', isCurrent: currentPage === 'register' }
         ]
@@ -598,17 +555,14 @@ const App = () => {
   return (
     <div className="app-main-container">
       
-      {/* HEADER / NAVBAR (Stilul din Figma) */}
       <header className="main-header">
         <div className="header-content-wrapper">
           
           <div className="logo-section" onClick={() => setCurrentPage('leaderboard')}>
-            {/* Logo/SVG: Aici folosim imaginea importată */}
             <img src={LogoGrill} alt="Logo" className="logo-img" />
             <h1 className="logo-text">Pimp Your Grill</h1>
           </div>
           
-          {/* Desktop Nav */}
           <nav className="nav-desktop">
             {navItems.map(item => (
               <button
@@ -619,17 +573,14 @@ const App = () => {
                 {item.name}
               </button>
             ))}
-            {/* ❗ Salutul Utilizatorului Logat */}
             {user && <span className="user-greeting">Salut, **{user.full_name?.split(' ')[0] || 'Grill Master'}**!</span>}
           </nav>
           
-          {/* Mobile Menu Button (Hamburger) */}
           <button className="menu-toggle-btn" onClick={() => setIsMenuOpen(!isMenuOpen)}>
             {isMenuOpen ? '✕' : '☰'}
           </button>
         </div>
         
-        {/* Mobile Menu Content */}
         {isMenuOpen && (
           <nav className="nav-mobile">
             {navItems.map(item => (
@@ -641,17 +592,15 @@ const App = () => {
                 {item.name}
               </button>
             ))}
-             {user && <span className="user-greeting-mobile">Salut, **{user.full_name?.split(' ')[0] || 'Grill Master'}**!</span>}
+              {user && <span className="user-greeting-mobile">Salut, **{user.full_name?.split(' ')[0] || 'Grill Master'}**!</span>}
           </nav>
         )}
       </header>
       
-      {/* MAIN CONTENT */}
       <main>
         {renderPage()}
       </main>
 
-      {/* FOOTER (Maro Închis din Figma) */}
       <footer className="main-footer">
         <p className="footer-contact">Contact: LSAC | Email: contact@lsac.ro</p>
         <div className="footer-social-links">
