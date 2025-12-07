@@ -14,18 +14,25 @@ const fetchApi = async (url, options = {}) => {
     ...options.headers,
   };
 
-  const response = await fetch(API_BASE_URL + url, {
-    ...options,
-    headers,
-  });
+  try {
+    const response = await fetch(API_BASE_URL + url, {
+      ...options,
+      headers,
+    });
 
-  const data = await response.json();
+    const data = await response.json();
 
-  if (!response.ok) {
-    throw new Error(data.message || 'Eroare la API');
+    if (!response.ok) {
+      throw new Error(data.message || `Eroare HTTP: ${response.status}`);
+    }
+
+    return data;
+  } catch (error) {
+    if (error.message.includes('Failed to fetch')) {
+        throw new Error('Nu se poate conecta la server. Verifică API-ul.');
+    }
+    throw error;
   }
-
-  return data;
 };
 
 const SimpleModal = ({ title, children, onClose }) => (
@@ -155,6 +162,7 @@ const AuthPage = ({ type, onAuthSuccess, setCurrentPage }) => {
       localStorage.setItem('token', data.token);
       localStorage.setItem('userId', data._id || data.user?._id); 
 
+      // ❗ Aici apelăm funcția de succes, care va reîncărca profilul și naviga
       await onAuthSuccess(data); 
 
     } catch (err) {
@@ -485,20 +493,16 @@ const LeaderboardPage = ({ user }) => {
     );
 };
 
+// ----------------------------------------------------------------------
+// MAIN APP COMPONENT (FINAL)
+// ----------------------------------------------------------------------
+
 const App = () => {
   const [user, setUser] = useState(null);
   const [currentPage, setCurrentPage] = useState('leaderboard'); 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      fetchApi('/user/profile')
-        .then(data => setUser(data.user)) 
-        .catch(() => handleLogout()); 
-    }
-  }, []);
-
+  // Funcție de logout
   const handleLogout = () => {
     localStorage.clear();
     setUser(null);
@@ -506,14 +510,50 @@ const App = () => {
     alert('Ai fost delogat.');
   };
   
-  const handleAuthSuccess = async () => {
+  // Funcție unică pentru a prelua profilul (cheia fixării)
+  const fetchUserProfile = useCallback(async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        setUser(null);
+        return false;
+    }
     try {
-      const profileData = await fetchApi('/user/profile');
-      setUser(profileData.user);
-      setCurrentPage('profile'); 
+        const profileData = await fetchApi('/user/profile');
+        
+        // Verifică structura datelor returnate de API (ar trebui să fie user || {user: user})
+        const userObject = profileData.user || profileData; 
+
+        if (userObject && userObject._id) {
+            setUser(userObject);
+            return true;
+        } else {
+            console.error("Răspuns profil invalid. Delogare.");
+            handleLogout();
+            return false;
+        }
     } catch (err) {
-      alert('Eroare la încărcarea profilului după autentificare');
-      handleLogout();
+        // Dacă token-ul a expirat sau este invalid
+        console.error("Eroare la preluarea profilului:", err);
+        handleLogout();
+        return false;
+    }
+  }, []); // Nu depinde de nimic, pentru a fi apelat oriunde
+
+  // Apelat la prima randare pentru a verifica token-ul
+  useEffect(() => {
+    fetchUserProfile();
+  }, [fetchUserProfile]);
+
+  // Apelat de AuthPage la succesul autentificării
+  const handleAuthSuccess = async () => {
+    // Reîncărcăm profilul cu noul token salvat de AuthPage
+    const success = await fetchUserProfile(); 
+
+    if (success) {
+      setCurrentPage('profile'); 
+    } else {
+        // Dacă eșuează încărcarea profilului după un login 200, ne delogăm
+        handleLogout();
     }
   };
 
@@ -540,6 +580,7 @@ const App = () => {
 
   const navItems = [
     { name: 'Best Grills', page: 'leaderboard', isCurrent: currentPage === 'leaderboard' },
+    // Logica de afișare a butoanelor
     ...(user
       ? [
           { name: 'Profile', page: 'profile', isCurrent: currentPage === 'profile' }, 
@@ -567,7 +608,10 @@ const App = () => {
             {navItems.map(item => (
               <button
                 key={item.name}
-                onClick={() => item.action ? item.action() : setCurrentPage(item.page)}
+                onClick={() => {
+                  item.action ? item.action() : setCurrentPage(item.page);
+                  setIsMenuOpen(false); 
+                }}
                 className={item.isCurrent ? 'nav-btn current' : 'nav-btn'}
               >
                 {item.name}
