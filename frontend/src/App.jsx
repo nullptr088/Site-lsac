@@ -3,6 +3,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import LogoGrill from './assets/logo.svg'; 
 import GratarSvg from './assets/Gratare.svg'; 
 import LouisSvg from './assets/Louis.svg'; 
+import ImageGratar from './assets/Image-gratar.svg';
 
 const API_BASE_URL = 'http://localhost:3001/api';
 
@@ -61,9 +62,8 @@ const GrillCard = ({ grill, user, onLike, onDelete, onEdit }) => {
 
   return (
     <div className="grill-card">
-      <div className="grill-image-placeholder">[Poza Grătar Aici]</div>
+      <img src={ImageGratar} alt="Logo" className="grill-img" />
       <h4 className="grill-title">{grill.name}</h4>
-      <p className="grill-meta">Creator ID: {grill.creator_id || 'N/A'}</p>
       <p className="grill-description">{grill.description}</p>
       
       <div className="grill-actions">
